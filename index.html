@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Corretor de Redação - Competência 2</title>
+    <style>
+        .hidden { display: none; }
+        .question {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .button {
+            margin: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        #resultado {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px;
+            padding: 20px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            display: none;
+        }
+        #comentario {
+            margin-top: 10px;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="inicio" class="question">
+        <p>O estudante menciona todas as palavras do tema (ou seus sinônimos) em algum momento do texto?</p>
+        <button class="button" onclick="responder('inicio', 'sim', 'outra_tipologia')">SIM</button>
+        <button class="button" onclick="mostrarResultado(40, 'Seu texto não menciona todas as palavras do tema ou seus sinônimos.')">NÃO</button>
+    </div>
+
+    <div id="outra_tipologia" class="question hidden">
+        <p>O texto foi escrito com outra tipologia textual, de forma predominante? Narração, por exemplo</p>
+        <button class="button" onclick="mostrarResultado(40, 'Seu texto não segue a tipologia dissertativa-argumentativa solicitada.')">SIM</button>
+        <button class="button" onclick="responder('outra_tipologia', 'nao', 'conclusao_margem')">NÃO</button>
+    </div>
+
+    <div id="conclusao_margem" class="question hidden">
+        <p>A última frase da conclusão está com raciocínio completo e dentro da margem?</p>
+        <button class="button" onclick="responder('conclusao_margem', 'sim', 'tres_partes')">SIM</button>
+        <button class="button" onclick="mostrarResultado(80, 'A conclusão do seu texto apresenta problemas de completude ou está fora da margem.')">NÃO</button>
+    </div>
+
+    <div id="tres_partes" class="question hidden">
+        <p>O texto apresenta introdução, desenvolvimento e conclusão, cada parte com pelo menos 3 linhas?</p>
+        <button class="button" onclick="responder('tres_partes', 'sim', 'repertorio_fonte')">SIM</button>
+        <button class="button" onclick="responder('tres_partes', 'nao', 'partes_curtas')">NÃO</button>
+    </div>
+
+    <div id="partes_curtas" class="question hidden">
+        <p>Quantas partes possuem 1 ou duas linhas?</p>
+        <button class="button" onclick="mostrarResultado(120, 'Uma das partes do seu texto está muito curta, com apenas 1 ou 2 linhas.')">1 PARTE</button>
+        <button class="button" onclick="mostrarResultado(80, 'Duas partes do seu texto estão muito curtas, com apenas 1 ou 2 linhas.')">2 PARTES</button>
+        <button class="button" onclick="mostrarResultado(120, 'As partes do seu texto possuem extensão adequada.')">NENHUMA</button>
+    </div>
+
+    <div id="repertorio_fonte" class="question hidden">
+        <p>O texto possui algum repertório com fonte?</p>
+        <button class="button" onclick="responder('repertorio_fonte', 'sim', 'repertorio_motivadores')">SIM</button>
+        <button class="button" onclick="mostrarResultado(120, 'Seu texto não apresenta repertório sociocultural com fonte.')">NÃO</button>
+    </div>
+
+    <div id="repertorio_motivadores" class="question hidden">
+        <p>O texto possui repertório apenas dos textos motivadores?</p>
+        <button class="button" onclick="mostrarResultado(120, 'Seu repertório utiliza apenas informações dos textos motivadores.')">SIM</button>
+        <button class="button" onclick="responder('repertorio_motivadores', 'nao', 'repertorio_conecta')">NÃO</button>
+    </div>
+
+    <div id="repertorio_conecta" class="question hidden">
+        <p>Possuindo repertórios externos e analisando esses repertórios há algum com as palavras do tema ou que se conecta com o tema?</p>
+        <button class="button" onclick="responder('repertorio_conecta', 'sim', 'contribui_argumentacao')">SIM</button>
+        <button class="button" onclick="mostrarResultado(120, 'Seus repertórios externos não se conectam adequadamente com o tema.')">NÃO</button>
+    </div>
+
+    <div id="contribui_argumentacao" class="question hidden">
+        <p>Esse repertório que possui relação com o tema contribui para a argumentação feita pelo estudante?</p>
+        <button class="button" onclick="mostrarResultado(200, 'Excelente! Seu repertório é pertinente e contribui efetivamente para sua argumentação.')">SIM</button>
+        <button class="button" onclick="mostrarResultado(160, 'Seu repertório tem relação com o tema, mas poderia ser melhor aproveitado na argumentação.')">NÃO</button>
+    </div>
+
+    <div id="resultado">
+        <p>Resultado: <span id="valor_resultado"></span></p>
+        <p id="comentario"></p>
+        <button class="button" onclick="reiniciar()">Recomeçar</button>
+    </div>
+
+    <script>
+        function responder(atual, resposta, proximo) {
+            document.getElementById(atual).classList.add('hidden');
+            document.getElementById(proximo).classList.remove('hidden');
+        }
+
+        function mostrarResultado(valor, comentario) {
+            document.querySelectorAll('.question').forEach(el => el.classList.add('hidden'));
+            document.getElementById('resultado').style.display = 'block';
+            document.getElementById('valor_resultado').textContent = valor;
+            document.getElementById('comentario').textContent = comentario;
+        }
+
+        function reiniciar() {
+            document.querySelectorAll('.question').forEach(el => el.classList.add('hidden'));
+            document.getElementById('resultado').style.display = 'none';
+            document.getElementById('inicio').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
